@@ -3,3 +3,5 @@ bin
 *.class
 *.doc
 *.docx
+.classpath
+.project

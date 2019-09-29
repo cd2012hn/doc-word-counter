@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Controller {
@@ -15,7 +16,7 @@ public class Controller {
 	public Controller(View theView, Model theModel) {
 		this.theView = theView;
 		this.theModel = theModel;
-		this.theView.addActionListener(new  btnChooseActionListener(), new btnCountActionListener());
+		this.theView.addActionListener(new  btnChooseActionListener(), new btnCountActionListener(), new btnAboutActionListener());
 	}
 
 	public class btnCountActionListener implements ActionListener {
@@ -53,5 +54,16 @@ public class Controller {
 			}
 		}
 
+	}
+	
+	public class btnAboutActionListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
+			JOptionPane.showMessageDialog(null, "Thành viên nhóm \n - Huỳnh Minh Dũng \n - Nguyễn Thọ Công Minh \n - Cao Thọ Hiếu", "About group", 1);
+
+		}
 	}
 }

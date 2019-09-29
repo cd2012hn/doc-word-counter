@@ -1,27 +1,19 @@
 package CountWord;
 
-import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JScrollPane;
 
 public class View extends JFrame {
 
 	private JPanel contentPane;
+	private JMenuBar menuBar;
+	private JMenu mnHelp;
+	private JMenuItem mnhAbout;
+	private JPanel mainPane;
 	private File file;
 	private JTextArea resultArea;
 	private JTextArea textArea;
@@ -51,18 +43,32 @@ public class View extends JFrame {
 	 * Create the frame.
 	 */
 	public View() {
-		setTitle("\u0110\u00EA\u0301m t\u01B0\u0300 ");
+		setTitle("Work count");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setSize(500, 380);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
+		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{38, 104, 0, 104, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
+		
+		menuBar = new JMenuBar();
+		mnHelp = new JMenu("Help");
+		mnhAbout = new JMenuItem("About group");
+		mnHelp.add(mnhAbout);
+		menuBar.add(mnHelp);
+		getContentPane().add(menuBar, BorderLayout.PAGE_START);
+		
+		mainPane = new JPanel();
+		mainPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.add(mainPane, BorderLayout.CENTER);
+		
+		GridBagLayout gbl_mainPane = new GridBagLayout();
+		gbl_mainPane.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_mainPane.rowHeights = new int[]{38, 104, 0, 104, 0};
+		gbl_mainPane.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_mainPane.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
+		mainPane.setLayout(gbl_mainPane);
 		
 		JLabel lblFile = new JLabel("File:");
 		GridBagConstraints gbc_lblFile = new GridBagConstraints();
@@ -70,7 +76,7 @@ public class View extends JFrame {
 		gbc_lblFile.anchor = GridBagConstraints.WEST;
 		gbc_lblFile.gridx = 0;
 		gbc_lblFile.gridy = 0;
-		contentPane.add(lblFile, gbc_lblFile);
+		mainPane.add(lblFile, gbc_lblFile);
 		
 		filePathField = new JTextField();
 		GridBagConstraints gbc_filePathField = new GridBagConstraints();
@@ -78,10 +84,10 @@ public class View extends JFrame {
 		gbc_filePathField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_filePathField.gridx = 1;
 		gbc_filePathField.gridy = 0;
-		contentPane.add(filePathField, gbc_filePathField);
+		mainPane.add(filePathField, gbc_filePathField);
 		filePathField.setColumns(10);
 		
-		btnChonFile = new JButton("Cho\u0323n File");
+		btnChonFile = new JButton("Choose File");
 //		btnChonFile.addActionListener(new ActionListener() {
 //			public void actionPerformed(ActionEvent e) {
 //				JFileChooser chooser = new JFileChooser();
@@ -95,7 +101,7 @@ public class View extends JFrame {
 		gbc_btnChonFile.insets = new Insets(0, 0, 5, 0);
 		gbc_btnChonFile.gridx = 2;
 		gbc_btnChonFile.gridy = 0;
-		contentPane.add(btnChonFile, gbc_btnChonFile);
+		mainPane.add(btnChonFile, gbc_btnChonFile);
 		
 		JLabel lblText = new JLabel("Text:");
 		GridBagConstraints gbc_lblText = new GridBagConstraints();
@@ -103,7 +109,7 @@ public class View extends JFrame {
 		gbc_lblText.insets = new Insets(0, 0, 5, 5);
 		gbc_lblText.gridx = 0;
 		gbc_lblText.gridy = 1;
-		contentPane.add(lblText, gbc_lblText);
+		mainPane.add(lblText, gbc_lblText);
 		
 		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -111,18 +117,18 @@ public class View extends JFrame {
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 1;
-		contentPane.add(scrollPane, gbc_scrollPane);
+		mainPane.add(scrollPane, gbc_scrollPane);
 		
 		textArea = new JTextArea();
 		scrollPane.setViewportView(textArea);
 		
-		btnCountWord = new JButton("\u0110\u00EA\u0301m t\u01B0\u0300");
+		btnCountWord = new JButton("Count");
 		GridBagConstraints gbc_btnCountWord = new GridBagConstraints();
 		gbc_btnCountWord.anchor = GridBagConstraints.WEST;
 		gbc_btnCountWord.insets = new Insets(0, 0, 5, 5);
 		gbc_btnCountWord.gridx = 1;
 		gbc_btnCountWord.gridy = 2;
-		contentPane.add(btnCountWord, gbc_btnCountWord);
+		mainPane.add(btnCountWord, gbc_btnCountWord);
 		
 		JLabel lblResult = new JLabel("Result:");
 		GridBagConstraints gbc_lblResult = new GridBagConstraints();
@@ -130,7 +136,7 @@ public class View extends JFrame {
 		gbc_lblResult.insets = new Insets(0, 0, 0, 5);
 		gbc_lblResult.gridx = 0;
 		gbc_lblResult.gridy = 3;
-		contentPane.add(lblResult, gbc_lblResult);
+		mainPane.add(lblResult, gbc_lblResult);
 		
 		scrollPane_1 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
@@ -138,7 +144,7 @@ public class View extends JFrame {
 		gbc_scrollPane_1.insets = new Insets(0, 0, 0, 5);
 		gbc_scrollPane_1.gridx = 1;
 		gbc_scrollPane_1.gridy = 3;
-		contentPane.add(scrollPane_1, gbc_scrollPane_1);
+		mainPane.add(scrollPane_1, gbc_scrollPane_1);
 		
 		resultArea = new JTextArea();
 		scrollPane_1.setViewportView(resultArea);
@@ -168,9 +174,10 @@ public class View extends JFrame {
 		this.filePathField.setText(filePath);
 	}
 	
-	public void addActionListener(ActionListener btnChoooseAL, ActionListener btnCountAL){
+	public void addActionListener(ActionListener btnChoooseAL, ActionListener btnCountAL, ActionListener btnAbout){
 		btnChonFile.addActionListener(btnChoooseAL);
 		btnCountWord.addActionListener(btnCountAL);
+		mnhAbout.addActionListener(btnAbout);
 	}
 
 	public void displayError(String error){

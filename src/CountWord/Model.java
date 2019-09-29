@@ -52,7 +52,7 @@ public class Model {
 			}
 
 		}
-		result = "Tổng số từ: " + countAll + "\n\n" + "Danh sách từ: \n";
+		result = "Total word: " + countAll + "\n\n" + "Word list: \n";
 		for (String wordKey: wordList.keySet()){
 			
 			result += wordKey+"\t"+wordList.get(wordKey)+"\n";

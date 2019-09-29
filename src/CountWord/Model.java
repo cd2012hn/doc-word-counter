@@ -22,6 +22,7 @@ public class Model {
 		String lineText;
 		String word;
 		String[] words;
+		int countAll = 0;
 		
 		String filePath = file.getAbsolutePath();
 		
@@ -35,12 +36,13 @@ public class Model {
 		TreeMap<String, Integer> wordList = new TreeMap<>();
 		scan = new Scanner((bodyText));
 		while (scan.hasNext()) {
-			lineText = scan.nextLine();
+			lineText = scan.nextLine().trim();
 			text += lineText+"\n";
-			words = lineText.split("[^\\p{L}\\d-_À-ž\\u0300-\\u036F]+[-_]*[^\\p{L}\\d-_À-ž\\u0300-\\u036F]*");
-			for (int i = 0; i < words.length; i++) {
-				word = words[i];
-				if (words[i].length() > 0) {
+			if (lineText.length() > 0) {
+				words = lineText.split("[^\\p{L}\\d-_À-ž\\u0300-\\u036F]+[-_]*[^\\p{L}\\d-_À-ž\\u0300-\\u036F]*");
+				countAll += words.length;
+				for (int i = 0; i < words.length; i++) {
+					word = words[i];
 					Integer count = wordList.get(word);
 					if (count != null)
 						wordList.put(word, count + 1);
@@ -50,6 +52,7 @@ public class Model {
 			}
 
 		}
+		result = "Tổng số từ: " + countAll + "\n\n" + "Danh sách từ: \n";
 		for (String wordKey: wordList.keySet()){
 			
 			result += wordKey+"\t"+wordList.get(wordKey)+"\n";

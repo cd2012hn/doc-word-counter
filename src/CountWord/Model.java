@@ -37,14 +37,16 @@ public class Model {
 		while (scan.hasNext()) {
 			lineText = scan.nextLine();
 			text += lineText+"\n";
-			words = lineText.split(" ");
+			words = lineText.split("[^\\p{L}\\d-_À-ž\\u0300-\\u036F]+[-_]*[^\\p{L}\\d-_À-ž\\u0300-\\u036F]*");
 			for (int i = 0; i < words.length; i++) {
 				word = words[i];
-				Integer count = wordList.get(word);
-				if (count != null)
-					wordList.put(word, count + 1);
-				else
-					wordList.put(word, 1);
+				if (words[i].length() > 0) {
+					Integer count = wordList.get(word);
+					if (count != null)
+						wordList.put(word, count + 1);
+					else
+						wordList.put(word, 1);
+				}
 			}
 
 		}

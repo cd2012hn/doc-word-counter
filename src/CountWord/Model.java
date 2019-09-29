@@ -39,7 +39,6 @@ public class Model {
 			text += lineText+"\n";
 			words = lineText.split("[^\\p{L}\\d-_À-ž\\u0300-\\u036F]+[-_]*[^\\p{L}\\d-_À-ž\\u0300-\\u036F]*");
 			for (int i = 0; i < words.length; i++) {
-				System.out.println(words[i]);
 				word = words[i];
 				Integer count = wordList.get(word);
 				if (count != null)

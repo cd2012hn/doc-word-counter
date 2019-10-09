@@ -43,7 +43,7 @@ public class View extends JFrame {
 	 * Create the frame.
 	 */
 	public View() {
-		setTitle("Work count");
+		setTitle("Word count");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500, 380);
 		setLocationRelativeTo(null);

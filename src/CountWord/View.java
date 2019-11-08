@@ -6,6 +6,7 @@ import java.io.File;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.DefaultCaret;
 
 public class View extends JFrame {
 
@@ -15,7 +16,7 @@ public class View extends JFrame {
 	private JMenuItem mnhAbout;
 	private JPanel mainPane;
 	private File file;
-	private JTextArea resultArea;
+	private JEditorPane resultArea;
 	private JTextArea textArea;
 	private JButton btnChonFile;
 	private JButton btnCountWord;
@@ -45,11 +46,11 @@ public class View extends JFrame {
 	public View() {
 		setTitle("Word count");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 380);
+		setSize(800, 500);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		menuBar = new JMenuBar();
@@ -120,6 +121,7 @@ public class View extends JFrame {
 		mainPane.add(scrollPane, gbc_scrollPane);
 		
 		textArea = new JTextArea();
+		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
 		
 		btnCountWord = new JButton("Count");
@@ -146,11 +148,14 @@ public class View extends JFrame {
 		gbc_scrollPane_1.gridy = 3;
 		mainPane.add(scrollPane_1, gbc_scrollPane_1);
 		
-		resultArea = new JTextArea();
+		resultArea = new JEditorPane();
+		DefaultCaret caret = (DefaultCaret)resultArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
+		resultArea.setContentType("text/html");
+		resultArea.setEditable(false);
 		scrollPane_1.setViewportView(resultArea);
 		
-		
-		
+		changeFont(contentPane, 18, true, Font.PLAIN);
 		
 	}
 	public void setResult(String result){
@@ -181,6 +186,20 @@ public class View extends JFrame {
 	}
 
 	public void displayError(String error){
-		JOptionPane.showMessageDialog(this, error);
+		JOptionPane.showMessageDialog(this, error, "Error", 0);
+	}
+	
+	private static void changeFont(Component component, int fontSize, boolean fixStyle, int style) {
+	    Font f = component.getFont();
+	    int styleSet = f.getStyle();
+	    if (fixStyle) {
+	    	styleSet = style;
+	    }
+	    component.setFont(new Font(f.getName(),styleSet,fontSize));
+	    if (component instanceof Container) {
+	        for (Component child : ((Container) component).getComponents()) {
+	            changeFont(child, fontSize, fixStyle, style);
+	        }
+	    }
 	}
 }

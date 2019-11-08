@@ -14,6 +14,7 @@ import org.apache.poi.xwpf.usermodel.XWPFDocument;
 public class Model {
 	private String result="";
 	private String text="";
+	private String REGEX = "[^\\p{L}\\d-_À-ž\\u0300-\\u036F]+[-_]*[^\\p{L}\\d-_À-ž\\u0300-\\u036F]*";
 
 	@SuppressWarnings("resource")
 	public void countWord(File file) throws IOException {
@@ -36,27 +37,34 @@ public class Model {
 		TreeMap<String, Integer> wordList = new TreeMap<>();
 		scan = new Scanner((bodyText));
 		while (scan.hasNext()) {
-			lineText = scan.nextLine().trim();
+			lineText = scan.nextLine();
 			text += lineText+"\n";
-			if (lineText.length() > 0) {
-				words = lineText.split("[^\\p{L}\\d-_À-ž\\u0300-\\u036F]+[-_]*[^\\p{L}\\d-_À-ž\\u0300-\\u036F]*");
-				countAll += words.length;
-				for (int i = 0; i < words.length; i++) {
-					word = words[i];
+			System.out.println("\n\n" + lineText);
+			words = lineText.split(REGEX);
+			countAll += words.length;
+			for (int i = 0; i < words.length; i++) {
+				word = words[i].toLowerCase();
+				if (word.length() > 0) {
 					Integer count = wordList.get(word);
 					if (count != null)
 						wordList.put(word, count + 1);
 					else
 						wordList.put(word, 1);
+				} else {
+					countAll--;
 				}
 			}
 
 		}
-		result = "Total word: " + countAll + "\n\n" + "Word list: \n";
+		result = "<div style='font-size: 18px'>Total word: " + countAll + "</div>\n" + "<p style='font-size: 18px'>Word list: </p>\n";
+		result += "<table style='border: 1px black solid; background-color: black; font-size: 18px' width='100%' cellspacing='1' cellpadding='2'>";
 		for (String wordKey: wordList.keySet()){
-			
-			result += wordKey+"\t"+wordList.get(wordKey)+"\n";
+			result += "<tr>";
+			result += "<td style='background-color: white'>" + wordKey+"</td><td style='background-color: white'>"+wordList.get(wordKey)+"</td>";
+			result += "</tr>\n";
 		}
+		result += "</table>";
+		System.out.println(result);
 	}
 	
 	public String getResult(){
